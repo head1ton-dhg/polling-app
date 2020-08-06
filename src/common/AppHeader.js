@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import './AppHeader.css';
-import pollIcon from '../poll.svg';
-import { Layout, Menu, DropDown, Icon } from 'antd';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import "../css/AppHeader.css";
+import pollIcon from "../poll.svg";
+import { Layout, Menu, DropDown, Icon } from "antd";
+
+/**
+ * 인증되지 않은 사용자에 대한 로그인 및 SignUp 버튼과 인증된 사용자에 대한 홈, 프로필 및 폴링 버튼을 렌더링
+ */
 
 const Header = Layout.Header;
 
@@ -23,33 +27,38 @@ class AppHeader extends Component {
         if (this.props.currentUser) {
             menuItems = [
                 <>
-                <Menu.Item key="/">
-                    <Link to="/">
-                        <Icon type="home" className="nav-icon" />
-                    </Link>
-                </Menu.Item>
-                <Menu.Item key="/poll/new">
-                    <Link to="/poll/new">
-                        <img src={pollIcon} alt="poll" className="poll-icon" />
-                    </Link>
-                </Menu.Item>
-                <Menu.Item key="/profile" className="profile-menu">
-                    <ProfileDropdownMenu
-                        currentUser={this.props.currentUser}
-                        handleMenuClick={this.handleMenuClick} />
-                </Menu.Item>
-                </>
+                    <Menu.Item key="/">
+                        <Link to="/">
+                            <Icon type="home" className="nav-icon" />
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/poll/new">
+                        <Link to="/poll/new">
+                            <img
+                                src={pollIcon}
+                                alt="poll"
+                                className="poll-icon"
+                            />
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/profile" className="profile-menu">
+                        <ProfileDropdownMenu
+                            currentUser={this.props.currentUser}
+                            handleMenuClick={this.handleMenuClick}
+                        />
+                    </Menu.Item>
+                </>,
             ];
         } else {
             menuItems = [
                 <>
-                <Menu.Item key="/login">
-                    <Link to="/login">Login</Link>
-                </Menu.Item>
-                <Menu.Item key="/signup">
-                    <Link to="/signup">Signup</Link>
-                </Menu.Item>
-                </>
+                    <Menu.Item key="/login">
+                        <Link to="/login">Login</Link>
+                    </Menu.Item>
+                    <Menu.Item key="/signup">
+                        <Link to="/signup">Signup</Link>
+                    </Menu.Item>
+                </>,
             ];
         }
 
@@ -63,11 +72,11 @@ class AppHeader extends Component {
                         className="app-menu"
                         mode="horizontal"
                         selectedKeys={[this.props.location.pathname]}
-                        style={{ lineHeight: '64px' }}
+                        style={{ lineHeight: "64px" }}
                     ></Menu>
                 </div>
             </Header>
-        )
+        );
     }
 }
 
@@ -86,20 +95,28 @@ function ProfileDropdownMenu(props) {
             <Menu.Item key="profile" className="dropdown-item">
                 <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
             </Menu.Item>
-            <Menu.Item key="logout" className="dropdown-item">Logout</Menu.Item>
+            <Menu.Item key="logout" className="dropdown-item">
+                Logout
+            </Menu.Item>
         </Menu>
     );
 
     return (
         <DropDown
             overlay={dropdownMenu}
-            trigger={['click']}
-            getPopupContainer={() => document.getElementsByClassName('profile-menu')[0]}
+            trigger={["click"]}
+            getPopupContainer={() =>
+                document.getElementsByClassName("profile-menu")[0]
+            }
         >
             <a className="ant-dropdown-link">
-                <Icon type="user" className="nav-icon" style={{marginRight: 0}} /> <Icon type="down" />
+                <Icon
+                    type="user"
+                    className="nav-icon"
+                    style={{ marginRight: 0 }}
+                />{" "}
+                <Icon type="down" />
             </a>
-
         </DropDown>
     );
 }
